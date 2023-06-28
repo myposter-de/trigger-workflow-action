@@ -22,9 +22,17 @@ When deploying an app you may need to deploy additional services, this Github Ac
 ## Example
 
 ```yaml
+- name: Checkout Action
+  uses: actions/checkout@v3
+  with:
+    repository: myposter-de/trigger-workflow-action
+    ref: refs/heads/master
+    path: ./.github/actions/trigger-workflow
+    token: ${{ secrets.DEVOPS_USER_TOKEN }}
+          
 - uses: myposter-de/trigger-workflow-action
   with:
-    github_token: ${{ secrets.GITHUB_PERSONAL_ACCESS_TOKEN }}
+    github_token: ${{ secrets.DEVOPS_USER_TOKEN }}
     owner: myposter-de
     repo: myrepo
     ref: master
