@@ -46,7 +46,7 @@ validate_args() {
   fi
 
   ref="main"
-  if [ -n "$INPUT_REF" ]
+  if [ -n "${INPUT_REF}" ]
   then
     ref="${INPUT_REF}"
   fi
@@ -55,18 +55,18 @@ validate_args() {
 api() {
   path=$1; shift
   if response=$(curl --fail-with-body -sSL \
-      "${GITHUB_API_URL}/repos/${INPUT_OWNER}/${INPUT_REPO}/actions/$path" \
+      "${GITHUB_API_URL}/repos/${INPUT_OWNER}/${INPUT_REPO}/actions/${path}" \
       -H "Authorization: Bearer ${INPUT_GITHUB_TOKEN}" \
       -H 'Accept: application/vnd.github.v3+json' \
       -H 'Content-Type: application/json' \
       "$@")
   then
-    echo "$response"
+    echo "${response}"
   else
     echo >&2 "api failed:"
-    echo >&2 "path: $path"
-    echo >&2 "response: $response"
-    if [[ "$response" == *'"Server Error"'* ]]; then 
+    echo >&2 "path: ${path}"
+    echo >&2 "response: ${response}"
+    if [[ "${response}" == *'"Server Error"'* ]]; then
       echo "Server error - trying again"
     else
       exit 1
